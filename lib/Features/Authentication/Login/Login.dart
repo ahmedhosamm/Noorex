@@ -34,14 +34,20 @@ class _LoginScreenState extends State<LoginScreen> {
             // زرار الرجوع
             Align(
               alignment: Alignment.topRight,
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.neutral300),
-                  borderRadius: BorderRadius.circular(4.r),
-                ),
-                child: IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: Icon(Icons.arrow_forward_outlined, size: 18.sp),
+              child: InkWell(
+                onTap: () => Navigator.pop(context),
+                borderRadius: BorderRadius.circular(4.r),
+                child: Container(
+                  padding: EdgeInsets.all(8.sp),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.neutral300, width: 1.5.w),
+                    borderRadius: BorderRadius.circular(4.r),
+                  ),
+                  child: Icon(
+                    Icons.arrow_forward_outlined,
+                    size: 18.sp,
+                    color: AppColors.neutral1000,
+                  ),
                 ),
               ),
             ),

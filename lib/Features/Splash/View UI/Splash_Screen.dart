@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      backgroundColor: AppColors.neutral100,
+      backgroundColor: AppColors.primary700,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -44,16 +44,17 @@ class _SplashScreenState extends State<SplashScreen> {
               width: 200.w,
               height: 100.h,
               duration: const Duration(milliseconds: 1500),
+
             ),
 
 
-            SizedBox(height: 20.h),
+            SizedBox(height: 8.h),
             SizedBox(
-              width: 20.w,
-              height: 20.w,
+              width: 24.w,
+              height: 24.w,
               child: CircularProgressIndicator(
                 strokeWidth: 2,
-                valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary700),
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.neutral100),
               ),
             ),
           ],

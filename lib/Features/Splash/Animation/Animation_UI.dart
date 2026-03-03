@@ -44,7 +44,7 @@ class _AnimatedLogoState extends State<AnimatedLogo>
     );
 
     _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 1), // Slide from bottom
+      begin: const Offset(0, 0.2), // خليت الـ Slide بسيط عشان ميبقاش المشوار بعيد
       end: Offset.zero,
     ).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeOut),
@@ -71,6 +71,8 @@ class _AnimatedLogoState extends State<AnimatedLogo>
             widget.assetPath,
             width: widget.width,
             height: widget.height,
+            // هنا شلنا أي colorFilter أو color تماماً
+            // عشان يقرأ الألوان الأصلية والـ Masks من الـ SVG مباشرة
           ),
         ),
       ),
