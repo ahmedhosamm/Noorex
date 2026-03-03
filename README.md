@@ -1,4 +1,4 @@
-# noorex
+# Noorex
 
 A new Flutter project.
 
