@@ -1,0 +1,64 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../Style/Theme/App_Colors.dart';
+import '../../Authentication/Login/Login.dart';
+import '../Animation/Animation_UI.dart';
+
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    // Transition time: The page will wait 3 seconds and then redirect to Login
+    Timer(const Duration(seconds: 3), () {
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()), // The page it will go to after the Splash
+        );
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+
+      backgroundColor: AppColors.neutral100,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+
+            AnimatedLogo(
+              assetPath: 'Assets/Icons/Svg/Logo.svg',
+              width: 200.w,
+              height: 100.h,
+              duration: const Duration(milliseconds: 1500),
+            ),
+
+
+            SizedBox(height: 20.h),
+            SizedBox(
+              width: 20.w,
+              height: 20.w,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary700),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

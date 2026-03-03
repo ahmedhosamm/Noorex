@@ -25,7 +25,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       decoration: BoxDecoration(
-        color: AppColors.neutral100, 
+        color: AppColors.neutral100,
         border: Border(
           bottom: BorderSide(
             color: AppColors.neutral200,
@@ -38,7 +38,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           height: 56.h,
           child: Row(
             children: [
-              // زر الرجوع
+              // Back Button
               if (hasLeading)
                 _buildAppBarButton(
                   onPressed: onBack ?? () => Navigator.pop(context),
@@ -49,7 +49,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 )
               else
-                SizedBox(width: 48.w), // مكان محجوز عشان العنوان يفضل في النص
+                SizedBox(width: 48.w),
 
               // العنوان
               Expanded(
@@ -62,11 +62,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
 
-              // زر الأكشن (إشعار أو أي حاجة تانية)
+              // Another Button
               _buildAppBarButton(
                 onPressed: onActionPressed ?? () {},
                 child: actionIcon ?? SvgPicture.asset(
-                  "Assets/Icons/Notification.svg",
+                  "Assets/Icons/Svg/Notification.svg",
                   width: 22.w,
                   height: 22.h,
                   colorFilter: ColorFilter.mode(
