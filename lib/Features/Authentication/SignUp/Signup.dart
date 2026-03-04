@@ -31,13 +31,12 @@ class _SignupscreenState extends State<Signupscreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 12.h),
 
             // زرار الرجوع
             Align(
               alignment: Alignment.topRight,
               child: InkWell(
-                onTap: () => Navigator.pop(context),
+                onTap: () => context.pop(),
                 borderRadius: BorderRadius.circular(4.r),
                 child: Container(
                   padding: EdgeInsets.all(8.sp),
@@ -200,7 +199,7 @@ class _SignupscreenState extends State<Signupscreen> {
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          context.go('/Signup');
+                          context.push('/login');
                         },
                     ),
                   ],

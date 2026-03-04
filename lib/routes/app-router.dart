@@ -13,6 +13,7 @@ class AppRouter {
       GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
       GoRoute(path: '/WelcomeScreen', builder: (context, state) => const WelcomeScreen()),
       GoRoute(path: '/Signup', builder: (context, state) => const Signupscreen()),
+
     ],
   );
 }

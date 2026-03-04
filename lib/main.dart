@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
-          routerConfig: AppRouter.router, // Hook up the router here
+          routerConfig: AppRouter.router,
           theme: ThemeData(useMaterial3: true, fontFamily: 'Cairo'),
         );
       },

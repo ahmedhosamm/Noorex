@@ -31,19 +31,20 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 12.h),
 
-            // زرار الرجوع
+
+
             Align(
               alignment: Alignment.topRight,
               child: InkWell(
-                onTap: () => Navigator.pop(context),
-                borderRadius: BorderRadius.circular(4.r),
+                onTap: () => context.pop(),
+                borderRadius: BorderRadius.circular(10.r),
                 child: Container(
                   padding: EdgeInsets.all(8.sp),
                   decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.neutral300, width: 1.5.w),
-                    borderRadius: BorderRadius.circular(4.r),
+                    color: AppColors.neutral100,
+                    border: Border.all(color: AppColors.neutral300, width: 1.w),
+                    borderRadius: BorderRadius.circular(10.r),
                   ),
                   child: Icon(
                     Icons.arrow_forward_outlined,
@@ -203,7 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          context.go('/Signup');
+                          context.push('/Signup');
                         },
                     ),
                   ],
@@ -213,12 +214,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
             SizedBox(height: 18.h),
 
-            // زرار تسجيل دخول
+            // تسجيل دخول
             CustomButtonWidget(
               text: 'تسجيل دخول',
               color: AppColors.primary700,
               onPressed: () {
-                context.go('/login');
+                context.push('/login');
               },
             ),
 
