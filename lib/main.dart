@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:noorex/routes/app-router.dart';
 
 void main() {
@@ -19,7 +20,10 @@ class MyApp extends StatelessWidget {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           routerConfig: AppRouter.router,
-          theme: ThemeData(useMaterial3: true, fontFamily: 'Cairo'),
+          theme: ThemeData(
+            useMaterial3: true,
+            textTheme: GoogleFonts.cairoTextTheme(ThemeData.light().textTheme),
+          ),
         );
       },
     );

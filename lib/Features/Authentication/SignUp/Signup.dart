@@ -36,12 +36,13 @@ class _SignupscreenState extends State<Signupscreen> {
               alignment: Alignment.topRight,
               child: InkWell(
                 onTap: () => context.pop(),
-                borderRadius: BorderRadius.circular(4.r),
+                borderRadius: BorderRadius.circular(10.r),
                 child: Container(
                   padding: EdgeInsets.all(8.sp),
                   decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.neutral300, width: 1.5.w),
-                    borderRadius: BorderRadius.circular(4.r),
+                    color: AppColors.neutral100,
+                    border: Border.all(color: AppColors.neutral300, width: 1.w),
+                    borderRadius: BorderRadius.circular(10.r),
                   ),
                   child: Icon(
                     Icons.arrow_forward_outlined,
