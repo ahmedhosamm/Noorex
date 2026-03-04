@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../Style/Theme/App_Colors.dart';
-import '../../Authentication/Login/Login.dart';
 import '../Animation/Animation_UI.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -21,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // Transition time: The page will wait 3 seconds and then redirect to Login
     Timer(const Duration(seconds: 3), () {
       if (mounted) {
-        context.go('/login');
+        context.go('/WelcomeScreen');
       }
     });
   }

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../Theme/App_Colors.dart';
 import '../../Theme/App_Fonts.dart';
 
-
 class CustomButtonWidget extends StatelessWidget {
   final VoidCallback? onPressed;
   final IconData? iconData;
@@ -19,7 +18,7 @@ class CustomButtonWidget extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
   final double borderRadius;
-  final BorderSide? borderSide;
+  final BorderSide? borderSide; // هنستخدم دي للبوردر
   final bool isEnabled;
   final TextStyle? textStyle;
   final List<Color>? gradientColors;
@@ -42,7 +41,7 @@ class CustomButtonWidget extends StatelessWidget {
     this.height,
     this.margin,
     this.padding,
-    this.borderRadius = 8,
+    this.borderRadius = 12, // خليتها 12 عشان تليق مع الـ UI الجديد
     this.borderSide,
     this.isEnabled = true,
     this.gradientColors,
@@ -52,18 +51,17 @@ class CustomButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // تحديد اللون الأساسي بناءً على حالة الزرار
     final Color effectiveBackgroundColor = isEnabled && !isLoading
-        ? (color ?? AppColors.primary700) // لون السيستم الأساسي (Mint)
-        : AppColors.neutral300; // رمادي لو الزرار مقفول
+        ? (color ?? AppColors.primary700)
+        : AppColors.neutral300;
 
     final Color effectiveTextColor = textColor ?? AppColors.neutral100;
 
     return GestureDetector(
       onTap: (isEnabled && !isLoading) ? onPressed : null,
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200), // أنيميشن خفيف للضغط
-        width: width ?? 1.sw * 0.9, // 90% من عرض الشاشة
+        duration: const Duration(milliseconds: 200),
+        width: width ?? 1.sw * 0.9,
         height: height ?? 53.h,
         margin: margin,
         padding: padding ?? EdgeInsets.symmetric(horizontal: 16.w),
@@ -74,10 +72,13 @@ class CustomButtonWidget extends StatelessWidget {
             begin: Alignment.topCenter,
           ) : null,
           borderRadius: BorderRadius.circular(borderRadius.r),
-          border: borderSide != null ? Border.all(color: borderSide!.color, width: borderSide!.width) : null,
+          // التعديل هنا: استخدام BorderSide الممررة للـ Widget
+          border: borderSide != null
+              ? Border.all(color: borderSide!.color, width: borderSide!.width)
+              : null,
           color: gradientColors == null ? effectiveBackgroundColor : null,
           boxShadow: boxShadow ?? [
-            if (isEnabled && !isLoading)
+            if (isEnabled && !isLoading && color != AppColors.neutral100) // مش محتاجين ظل تقيل لو الزرار أبيض
               BoxShadow(
                 color: AppColors.neutral1000.withValues(alpha: 0.1),
                 spreadRadius: 1,
@@ -105,7 +106,6 @@ class CustomButtonWidget extends StatelessWidget {
                 8.horizontalSpace,
               ],
               if (imagePath != null) ...[
-                // هنا نستخدم المسار من AppAssets لو حبيت
                 Image.asset(imagePath!, color: imageColor ?? effectiveTextColor, width: 20.sp),
                 8.horizontalSpace,
               ],
