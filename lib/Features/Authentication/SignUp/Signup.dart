@@ -8,14 +8,14 @@ import '../../../Style/Theme/Base_Screen.dart';
 import '../../../Style/Widgets/Buttons/Custom_Button_Widget.dart';
 import '../../../Style/Widgets/Text Field/Custom_Text_Field_Widget.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class Signupscreen extends StatefulWidget {
+  const Signupscreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<Signupscreen> createState() => _SignupscreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupscreenState extends State<Signupscreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'تسجيل الدخول',
+                    'إنشاء حساب',
                     style: AppTexts.heading1Bold.copyWith(
                       color: AppColors.neutral1000,
                     ),
@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 8.h),
                   Text(
-                    'الرجاء إدخال بريدك الإلكتروني وكلـمة المرور للوصول إلى حسابك.',
+                    'الرجاء إدخال بريدك الإلكتروني وسنرسل رمز التأكيد إلى بريدك الإلكتروني',
                     textAlign: TextAlign.center,
                     style: AppTexts.contentRegular.copyWith(
                       color: AppColors.neutral600,
@@ -80,6 +80,15 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
 
             SizedBox(height: 32.h),
+
+           // اسم المستخدم
+            CustomTextFormFieldWidget(
+              controller: emailController,
+              labelText: 'اسم المستخدم',
+              hintText: 'قم بإدخال اسم المستخدم الخاص بك هنا',
+            ),
+
+            SizedBox(height: 18.h),
 
             // البريد الإلكتروني
             CustomTextFormFieldWidget(
@@ -162,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Checkbox(
                     value: isAgreed,
                     activeColor: AppColors.primary700,
-                    side: BorderSide(color: AppColors.neutral600),
+                    side: BorderSide(color: AppColors.neutral600,),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
                     onChanged: (val) => setState(() => isAgreed = val!),
                   ),
@@ -170,18 +179,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
 
-            SizedBox(height: 8.h),
-            // نسيت كلمه المرور
-            GestureDetector(
-              onTap: () {},
-              child: Text(
-                  'نسيت كلـمة السر؟',
-                  style: AppTexts.contentRegular.copyWith(
-                    color: AppColors.secondary500,
-                    decoration: TextDecoration.underline,
-                  )
-              ),
-            ),
 
             const Spacer(),
 
@@ -189,14 +186,14 @@ class _LoginScreenState extends State<LoginScreen> {
             Center(
               child: Text.rich(
                 TextSpan(
-                  text: 'ليس لديك حساب ؟',
+                  text: 'لدي لديك حساب ؟',
                   style: AppTexts.contentRegular.copyWith(
                     color: AppColors.neutral300,
                   ),
                   children: [
                     WidgetSpan(child: SizedBox(width: 4.w)),
                     TextSpan(
-                      text: 'إنشاء حساب',
+                      text: 'تسجيل الدخول',
                       style: AppTexts.contentEmphasis.copyWith(
                         color: AppColors.secondary500,
                         decoration: TextDecoration.underline,
@@ -215,11 +212,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
             // زرار تسجيل دخول
             CustomButtonWidget(
-              text: 'تسجيل دخول',
+              text: 'التالي',
               color: AppColors.primary700,
-              onPressed: () {
-                context.go('/login');
-              },
+              onPressed: () {},
             ),
 
             SizedBox(height: 24.h),
