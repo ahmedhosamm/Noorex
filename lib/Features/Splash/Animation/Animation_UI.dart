@@ -44,7 +44,7 @@ class _AnimatedLogoState extends State<AnimatedLogo>
     );
 
     _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.2), // خليت الـ Slide بسيط عشان ميبقاش المشوار بعيد
+      begin: const Offset(0, 0.2),
       end: Offset.zero,
     ).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeOut),

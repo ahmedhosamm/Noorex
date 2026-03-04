@@ -82,7 +82,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
             SizedBox(height: 32.h),
 
-            // البريد الإلكتروني
             CustomTextFormFieldWidget(
               controller: emailController,
               labelText: 'البريد الإلكتروني',
@@ -91,7 +90,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
             SizedBox(height: 18.h),
 
-            // كلمة المرور
             CustomTextFormFieldWidget(
               controller: passwordController,
               labelText: 'كلـمة المرور',
@@ -106,14 +104,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
             SizedBox(height: 8.h),
 
-            // أوافق على سياسة الخصوصية و شروط الخدمة
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
                   child: Text.rich(
-                    textAlign: TextAlign.right, // محاذاة النص لليمين
+                    textAlign: TextAlign.right,
                     textDirection: TextDirection.rtl,
                     TextSpan(
                       text: 'أوافق على ',
@@ -121,7 +118,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: AppColors.neutral600,
                       ),
                       children: [
-                        // 1. شروط الخدمة
                         WidgetSpan(
                           alignment: PlaceholderAlignment.middle,
                           child: InkWell(
@@ -137,7 +133,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         const TextSpan(text: '  و '),
-                        // 2. سياسة الخصوصية
                         WidgetSpan(
                           alignment: PlaceholderAlignment.middle,
                           child: InkWell(
@@ -172,7 +167,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
 
             SizedBox(height: 8.h),
-            // نسيت كلمه المرور
             GestureDetector(
               onTap: () {},
               child: Text(
@@ -186,7 +180,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
             const Spacer(),
 
-            // إنشاء حساب
             Center(
               child: Text.rich(
                 TextSpan(
@@ -214,7 +207,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
             SizedBox(height: 18.h),
 
-            // تسجيل دخول
             CustomButtonWidget(
               text: 'تسجيل دخول',
               color: AppColors.primary700,

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../Theme/App_Colors.dart';
 import '../../Theme/App_Fonts.dart';
 
-class CustomButtonWidget extends StatelessWidget {
+class CustomButtonWidget extends StatefulWidget {
   final VoidCallback? onPressed;
   final IconData? iconData;
   final String? imagePath;
@@ -41,7 +41,7 @@ class CustomButtonWidget extends StatelessWidget {
     this.height,
     this.margin,
     this.padding,
-    this.borderRadius = 8,
+    this.borderRadius = 10,
     this.borderSide,
     this.isEnabled = true,
     this.gradientColors,
@@ -50,75 +50,106 @@ class CustomButtonWidget extends StatelessWidget {
   });
 
   @override
+  State<CustomButtonWidget> createState() => _CustomButtonWidgetState();
+}
+
+class _CustomButtonWidgetState extends State<CustomButtonWidget> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 100),
+    );
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final Color effectiveBackgroundColor = isEnabled && !isLoading
-        ? (color ?? AppColors.primary700)
+    final Color effectiveBackgroundColor = widget.isEnabled && !widget.isLoading
+        ? (widget.color ?? AppColors.primary700)
         : AppColors.neutral300;
 
-    final Color effectiveTextColor = textColor ?? AppColors.neutral100;
+    final Color effectiveTextColor = widget.textColor ?? AppColors.neutral100;
 
     return GestureDetector(
-      onTap: (isEnabled && !isLoading) ? onPressed : null,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        width: width ?? 1.sw * 0.9,
-        height: height ?? 53.h,
-        margin: margin,
-        padding: padding ?? EdgeInsets.symmetric(horizontal: 16.w),
-        decoration: BoxDecoration(
-          gradient: gradientColors != null ? LinearGradient(
-            colors: gradientColors!,
-            end: Alignment.bottomCenter,
-            begin: Alignment.topCenter,
-          ) : null,
-          borderRadius: BorderRadius.circular(borderRadius.r),
-
-          border: borderSide != null
-              ? Border.all(color: borderSide!.color, width: borderSide!.width)
-              : null,
-          color: gradientColors == null ? effectiveBackgroundColor : null,
-          boxShadow: boxShadow ?? [
-            if (isEnabled && !isLoading && color != AppColors.neutral100)
-              BoxShadow(
-                color: AppColors.neutral1000.withValues(alpha: 0.1),
-                spreadRadius: 1,
-                blurRadius: 8.sp,
-                offset: const Offset(0, 4),
-              ),
-          ],
-        ),
-        child: Center(
-          child: isLoading
-              ? SizedBox(
-            width: 24.sp,
-            height: 24.sp,
-            child: CircularProgressIndicator(
-              strokeWidth: 2.5,
-              valueColor: AlwaysStoppedAnimation<Color>(effectiveTextColor),
-            ),
-          )
-              : Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (iconData != null) ...[
-                Icon(iconData, color: effectiveTextColor, size: 20.sp),
-                8.horizontalSpace,
-              ],
-              if (imagePath != null) ...[
-                Image.asset(imagePath!, color: imageColor ?? effectiveTextColor, width: 20.sp),
-                8.horizontalSpace,
-              ],
-              if (text != null)
-                Text(
-                  text!,
-                  style: textStyle ?? AppTexts.featureBold.copyWith(
-                    color: effectiveTextColor,
-                    fontSize: fontSize?.sp,
-                    fontWeight: fontWeight,
-                  ),
+      onTapDown: (_) => widget.isEnabled ? _controller.forward() : null,
+      onTapUp: (_) => widget.isEnabled ? _controller.reverse() : null,
+      onTapCancel: () => widget.isEnabled ? _controller.reverse() : null,
+      onTap: (widget.isEnabled && !widget.isLoading) ? widget.onPressed : null,
+      child: ScaleTransition(
+        scale: _scaleAnimation,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          width: widget.width,
+          height: widget.height ?? 53.h,
+          margin: widget.margin,
+          padding: widget.padding ?? EdgeInsets.symmetric(horizontal: 16.w),
+          decoration: BoxDecoration(
+            gradient: widget.gradientColors != null ? LinearGradient(
+              colors: widget.gradientColors!,
+              end: Alignment.bottomCenter,
+              begin: Alignment.topCenter,
+            ) : null,
+            borderRadius: BorderRadius.circular(widget.borderRadius.r),
+            border: widget.borderSide != null
+                ? Border.all(color: widget.borderSide!.color, width: widget.borderSide!.width)
+                : null,
+            color: widget.gradientColors == null ? effectiveBackgroundColor : null,
+            boxShadow: widget.boxShadow ?? [
+              if (widget.isEnabled && !widget.isLoading && widget.color != AppColors.neutral100)
+                BoxShadow(
+                  color: AppColors.neutral1000.withValues(alpha: 0.1),
+                  spreadRadius: 1,
+                  blurRadius: 8.sp,
+                  offset: const Offset(0, 4),
                 ),
             ],
+          ),
+          child: Center(
+            child: widget.isLoading
+                ? SizedBox(
+              width: 24.sp,
+              height: 24.sp,
+              child: CircularProgressIndicator(
+                strokeWidth: 2.5,
+                valueColor: AlwaysStoppedAnimation<Color>(effectiveTextColor),
+              ),
+            )
+                : Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (widget.iconData != null) ...[
+                  Icon(widget.iconData, color: effectiveTextColor, size: 20.sp),
+                  8.horizontalSpace,
+                ],
+                if (widget.imagePath != null) ...[
+                  Image.asset(widget.imagePath!, color: widget.imageColor ?? effectiveTextColor, width: 20.sp),
+                  8.horizontalSpace,
+                ],
+                if (widget.text != null)
+                  Text(
+                    widget.text!,
+                    style: widget.textStyle ?? AppTexts.featureBold.copyWith(
+                      color: effectiveTextColor,
+                      fontSize: widget.fontSize?.sp,
+                      fontWeight: widget.fontWeight,
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),

@@ -103,7 +103,6 @@ class CustomTextFormFieldWidget extends StatelessWidget {
           ),
         ],
 
-        // 2. الخانة نفسها
         Focus(
           focusNode: focusNode,
           child: Builder(
@@ -151,7 +150,6 @@ class CustomTextFormFieldWidget extends StatelessWidget {
                       vertical: height ?? 12.h,
                     ),
 
-                    // إعدادات البرواز
                     border: _buildBorder(AppColors.neutral300),
                     enabledBorder: _buildBorder(currentBorderColor),
                     focusedBorder: _buildBorder(AppColors.primary700, width: 1.2),
@@ -181,7 +179,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
 
   OutlineInputBorder _buildBorder(Color color, {double width = 1.0}) {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(borderRadius ?? 8.r), // كبرنا الـ Radius شوية لـ 12 زي الصورة
+      borderRadius: BorderRadius.circular(borderRadius ?? 8.r),
       borderSide: BorderSide(
         color: color,
         width: width.sp,
