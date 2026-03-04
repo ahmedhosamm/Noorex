@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -5,6 +6,7 @@ import '../../../Style/Theme/App_Colors.dart';
 import '../../../Style/Theme/App_Fonts.dart';
 import '../../../Style/Theme/Base_Screen.dart';
 import '../../../Style/Widgets/Buttons/Custom_Button_Widget.dart';
+import '../../../Style/Widgets/Popups/Poup_UI.dart';
 import '../../../routes/app-router.dart';
 import '../Login/Login.dart';
 
@@ -19,13 +21,14 @@ class WelcomeScreen extends StatelessWidget {
         children: [
           SizedBox(height: 40.h),
 
-          // العناوين العلوية
           Text(
             'مرحباً بك في نوريكس',
             style: AppTexts.display1Bold.copyWith(color: AppColors.neutral1000),
             textAlign: TextAlign.center,
           ),
+
           SizedBox(height: 12.h),
+
           Text(
             'اختر طريقة التسجيل الخاصة بك',
             style: AppTexts.contentRegular.copyWith(color: AppColors.neutral600),
@@ -51,7 +54,6 @@ class WelcomeScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(height: 32.h),
-                    // تسجيل دخول
                     CustomButtonWidget(
                       text: 'تسجيل دخول',
                       onPressed: () {
@@ -61,7 +63,6 @@ class WelcomeScreen extends StatelessWidget {
 
                     SizedBox(height: 12.h),
 
-                    // انشاء حساب
                     CustomButtonWidget(
                       text: 'إنشاء حساب',
                       color: AppColors.neutral100,
@@ -74,27 +75,30 @@ class WelcomeScreen extends StatelessWidget {
 
                     SizedBox(height: 12.h),
 
-                    // التسجيل كضيف
                     Center(
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Text.rich(
-                          TextSpan(
-                            text: 'لا أريد إنشاء حساب الآن ',
-                            style: AppTexts.contentRegular.copyWith(
-                              color: AppColors.neutral300,
-                            ),
-                            children: [
-                              WidgetSpan(child: SizedBox(width: 4.w)),
-                              TextSpan(
-                                text: 'تسجيل كضيف',
-                                style: AppTexts.contentEmphasis.copyWith(
-                                  color: AppColors.secondary500,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ],
+                      child: Text.rich(
+                        TextSpan(
+                          text: 'لا أريد إنشاء حساب الآن ',
+                          style: AppTexts.contentRegular.copyWith(
+                            color: AppColors.neutral300,
                           ),
+                          children: [
+                            WidgetSpan(child: SizedBox(width: 4.w)),
+                            TextSpan(
+                              text: 'تسجيل كضيف',
+                              style: AppTexts.contentEmphasis.copyWith(
+                                color: AppColors.secondary500,
+                                decoration: TextDecoration.underline,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  AppDialogs.showGuestBottomSheet(
+                                    context: context,
+                                    imagePath: "Assets/Icons/Svg/guest_warning.svg",
+                                  );
+                                },
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -102,7 +106,6 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
 
-              // logo
               Positioned(
                 top: -50.w,
                 child: Container(

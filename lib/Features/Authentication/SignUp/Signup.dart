@@ -32,7 +32,6 @@ class _SignupscreenState extends State<Signupscreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            // زرار الرجوع
             Align(
               alignment: Alignment.topRight,
               child: InkWell(
@@ -80,7 +79,6 @@ class _SignupscreenState extends State<Signupscreen> {
 
             SizedBox(height: 32.h),
 
-           // اسم المستخدم
             CustomTextFormFieldWidget(
               controller: emailController,
               labelText: 'اسم المستخدم',
@@ -89,7 +87,6 @@ class _SignupscreenState extends State<Signupscreen> {
 
             SizedBox(height: 18.h),
 
-            // البريد الإلكتروني
             CustomTextFormFieldWidget(
               controller: emailController,
               labelText: 'البريد الإلكتروني',
@@ -98,7 +95,6 @@ class _SignupscreenState extends State<Signupscreen> {
 
             SizedBox(height: 18.h),
 
-            // كلمة المرور
             CustomTextFormFieldWidget(
               controller: passwordController,
               labelText: 'كلـمة المرور',
@@ -113,14 +109,13 @@ class _SignupscreenState extends State<Signupscreen> {
 
             SizedBox(height: 8.h),
 
-            // أوافق على سياسة الخصوصية و شروط الخدمة
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
                   child: Text.rich(
-                    textAlign: TextAlign.right, // محاذاة النص لليمين
+                    textAlign: TextAlign.right,
                     textDirection: TextDirection.rtl,
                     TextSpan(
                       text: 'أوافق على ',
@@ -128,7 +123,6 @@ class _SignupscreenState extends State<Signupscreen> {
                         color: AppColors.neutral600,
                       ),
                       children: [
-                        // 1. شروط الخدمة
                         WidgetSpan(
                           alignment: PlaceholderAlignment.middle,
                           child: InkWell(
@@ -144,7 +138,6 @@ class _SignupscreenState extends State<Signupscreen> {
                           ),
                         ),
                         const TextSpan(text: '  و '),
-                        // 2. سياسة الخصوصية
                         WidgetSpan(
                           alignment: PlaceholderAlignment.middle,
                           child: InkWell(
@@ -181,7 +174,6 @@ class _SignupscreenState extends State<Signupscreen> {
 
             const Spacer(),
 
-            // إنشاء حساب
             Center(
               child: Text.rich(
                 TextSpan(
@@ -209,7 +201,6 @@ class _SignupscreenState extends State<Signupscreen> {
 
             SizedBox(height: 18.h),
 
-            // زرار تسجيل دخول
             CustomButtonWidget(
               text: 'التالي',
               color: AppColors.primary700,
