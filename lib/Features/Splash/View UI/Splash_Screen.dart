@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
               duration: const Duration(milliseconds: 1500),
             ),
 
-            SizedBox(height: 8.h),
+            SizedBox(height: 12.h),
             SizedBox(
               width: 24.w,
               height: 24.w,

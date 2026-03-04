@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import '../../../Style/Theme/App_Colors.dart';
 import '../../../Style/Theme/App_Fonts.dart';
 import '../../../Style/Theme/Base_Screen.dart';
 import '../../../Style/Widgets/Buttons/Custom_Button_Widget.dart';
+import '../../../routes/app-router.dart';
 import '../Login/Login.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -53,10 +55,7 @@ class WelcomeScreen extends StatelessWidget {
                     CustomButtonWidget(
                       text: 'تسجيل دخول',
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const LoginScreen()),
-                        );
+                        context.go('/login');
                       },
                     ),
 
@@ -69,7 +68,7 @@ class WelcomeScreen extends StatelessWidget {
                       textColor: AppColors.primary700,
                       borderSide: BorderSide(color: AppColors.primary700, ), // برواز باللون المينت
                       onPressed: () {
-                        // Navigate to Sign Up
+                        context.go('/Signup');
                       },
                     ),
 
