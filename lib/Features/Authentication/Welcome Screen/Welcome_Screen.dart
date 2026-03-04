@@ -48,7 +48,7 @@ class WelcomeScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: AppColors.neutral100,
                   borderRadius: BorderRadius.circular(16.r),
-                  border: Border.all(color: AppColors.primary500,),
+                  border: Border.all(color: AppColors.primary700,),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

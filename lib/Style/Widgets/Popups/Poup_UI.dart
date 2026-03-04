@@ -13,15 +13,16 @@ class AppDialogs {
     VoidCallback? onGuestPressed,
   }) {
     const defaultBtn = CustomButtonWidget();
+    final parentContext = context;
 
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       useRootNavigator: true,
-      builder: (context) => Container(
+      builder: (sheetContext) => Container(
         constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.75,
+          maxHeight: MediaQuery.of(sheetContext).size.height * 0.75,
         ),
         decoration: BoxDecoration(
           color: AppColors.neutral100,
@@ -35,7 +36,7 @@ class AppDialogs {
             16.w,
             12.h,
             16.w,
-            24.h + MediaQuery.of(context).viewInsets.bottom,
+            24.h + MediaQuery.of(sheetContext).viewInsets.bottom,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -97,12 +98,12 @@ class AppDialogs {
                       text: "تسجيل كضيف",
                       color: AppColors.neutral100,
                       textColor: AppColors.primary700,
-                      borderSide: BorderSide(color: AppColors.primary700, width: 1.2.w),
+                      borderSide: BorderSide(color: AppColors.primary700,),
                       width: double.infinity,
                       height: defaultBtn.height ?? 53.h,
                       borderRadius: defaultBtn.borderRadius,
                       onPressed: () {
-                        context.pop();
+                        Navigator.of(sheetContext).pop();
                         onGuestPressed?.call();
                       },
                     ),
@@ -116,8 +117,8 @@ class AppDialogs {
                       height: defaultBtn.height ?? 53.h,
                       borderRadius: defaultBtn.borderRadius,
                       onPressed: () {
-                        context.pop();
-                        context.push('/login');
+                        Navigator.of(sheetContext).pop();
+                        parentContext.push('/login');
                       },
                     ),
                   ),
