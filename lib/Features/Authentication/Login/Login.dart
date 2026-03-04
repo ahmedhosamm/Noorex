@@ -189,12 +189,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () {},
                 child: Text.rich(
                   TextSpan(
-                    text: 'ليس لديك حساب ؟', // شلنا المسافة اليدوية من هنا
+                    text: 'ليس لديك حساب ؟',
                     style: AppTexts.contentRegular.copyWith(
                       color: AppColors.neutral300,
                     ),
                     children: [
-                      // إضافة مسافة 4 بالضبط
                       WidgetSpan(child: SizedBox(width: 4.w)),
                       TextSpan(
                         text: 'إنشاء حساب',
