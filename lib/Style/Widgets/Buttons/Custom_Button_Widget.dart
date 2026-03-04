@@ -18,7 +18,7 @@ class CustomButtonWidget extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
   final double borderRadius;
-  final BorderSide? borderSide; // هنستخدم دي للبوردر
+  final BorderSide? borderSide;
   final bool isEnabled;
   final TextStyle? textStyle;
   final List<Color>? gradientColors;
@@ -41,7 +41,7 @@ class CustomButtonWidget extends StatelessWidget {
     this.height,
     this.margin,
     this.padding,
-    this.borderRadius = 12, // خليتها 12 عشان تليق مع الـ UI الجديد
+    this.borderRadius = 8,
     this.borderSide,
     this.isEnabled = true,
     this.gradientColors,
@@ -72,13 +72,13 @@ class CustomButtonWidget extends StatelessWidget {
             begin: Alignment.topCenter,
           ) : null,
           borderRadius: BorderRadius.circular(borderRadius.r),
-          // التعديل هنا: استخدام BorderSide الممررة للـ Widget
+
           border: borderSide != null
               ? Border.all(color: borderSide!.color, width: borderSide!.width)
               : null,
           color: gradientColors == null ? effectiveBackgroundColor : null,
           boxShadow: boxShadow ?? [
-            if (isEnabled && !isLoading && color != AppColors.neutral100) // مش محتاجين ظل تقيل لو الزرار أبيض
+            if (isEnabled && !isLoading && color != AppColors.neutral100)
               BoxShadow(
                 color: AppColors.neutral1000.withValues(alpha: 0.1),
                 spreadRadius: 1,

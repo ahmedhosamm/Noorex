@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // Transition time: The page will wait 3 seconds and then redirect to Login
     Timer(const Duration(seconds: 3), () {
       if (mounted) {
-        context.go('/WelcomeScreen');
+        context.push('/WelcomeScreen');
       }
     });
   }
@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
               duration: const Duration(milliseconds: 1500),
             ),
 
-            SizedBox(height: 12.h),
+            SizedBox(height: 24.h),
             SizedBox(
               width: 24.w,
               height: 24.w,

@@ -71,8 +71,7 @@ class _AnimatedLogoState extends State<AnimatedLogo>
             widget.assetPath,
             width: widget.width,
             height: widget.height,
-            // هنا شلنا أي colorFilter أو color تماماً
-            // عشان يقرأ الألوان الأصلية والـ Masks من الـ SVG مباشرة
+            
           ),
         ),
       ),

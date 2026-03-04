@@ -17,9 +17,9 @@ class WelcomeScreen extends StatelessWidget {
 
       child: Column(
         children: [
-          SizedBox(height: 60.h),
+          SizedBox(height: 40.h),
 
-          // 1. العناوين العلوية
+          // العناوين العلوية
           Text(
             'مرحباً بك في نوريكس',
             style: AppTexts.display1Bold.copyWith(color: AppColors.neutral1000),
@@ -38,7 +38,7 @@ class WelcomeScreen extends StatelessWidget {
             clipBehavior: Clip.none,
             alignment: Alignment.topCenter,
             children: [
-              // الحاوية البيضاء (البطاقة)
+
               Container(
                 width: double.infinity,
                 padding: EdgeInsets.fromLTRB(18.w, 60.h, 18.w, 18.h),
@@ -55,7 +55,7 @@ class WelcomeScreen extends StatelessWidget {
                     CustomButtonWidget(
                       text: 'تسجيل دخول',
                       onPressed: () {
-                        context.go('/login');
+                        context.push('/login');
                       },
                     ),
 
@@ -66,9 +66,9 @@ class WelcomeScreen extends StatelessWidget {
                       text: 'إنشاء حساب',
                       color: AppColors.neutral100,
                       textColor: AppColors.primary700,
-                      borderSide: BorderSide(color: AppColors.primary700, ), // برواز باللون المينت
+                      borderSide: BorderSide(color: AppColors.primary700, ),
                       onPressed: () {
-                        context.go('/Signup');
+                        context.push('/Signup');
                       },
                     ),
 
