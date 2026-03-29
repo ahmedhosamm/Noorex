@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:noorex/Features/Authentication/Login/Login.dart';
 import 'package:noorex/Features/Splash/View%20UI/Splash_Screen.dart';
 import '../Features/Authentication/Create New Passward/Create _New_Passward.dart';
+import '../Features/Authentication/Forgot Password/forgot_Password.dart';
 import '../Features/Authentication/SignUp/Signup.dart';
 import '../Features/Authentication/Welcome Screen/Welcome_Screen.dart';
 
@@ -15,7 +16,7 @@ class AppRouter {
       GoRoute(path: '/WelcomeScreen', builder: (context, state) => const WelcomeScreen()),
       GoRoute(path: '/Signup', builder: (context, state) => const Signupscreen()),
       GoRoute(path: '/CreateNewPassword', builder: (context, state) => const Create_New_Password()),
-
+      GoRoute(path: '/forgot_Password', builder: (context, state) => const forgot_Password()),
     ],
   );
 }
