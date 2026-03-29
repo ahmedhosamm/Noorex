@@ -169,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: 8.h),
             GestureDetector(
               onTap: () {
-                context.push('/Signup');
+                context.push('/forgot_Password');
               },
               child: Text(
                   'نسيت كلـمة السر؟',
