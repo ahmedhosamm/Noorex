@@ -168,7 +168,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
             SizedBox(height: 8.h),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                context.push('/Signup');
+              },
               child: Text(
                   'نسيت كلـمة السر؟',
                   style: AppTexts.contentRegular.copyWith(
