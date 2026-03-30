@@ -1,29 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
-import '../../../Style/Theme/App_Colors.dart';
-import '../../../Style/Theme/App_Fonts.dart';
+import 'package:flutter_svg/svg.dart';
+import '../../Theme/App_Colors.dart';
+import '../../Theme/App_Fonts.dart';
 import '../Buttons/Custom_Button_Widget.dart';
 
 class AppDialogs {
-  static void showGuestBottomSheet({
+  static void showCommonBottomSheet({
     required BuildContext context,
     required String imagePath,
-    VoidCallback? onGuestPressed,
+    required String title,
+    required InlineSpan descriptionSpan,
+    required String primaryBtnText,
+    required VoidCallback onPrimaryPressed,
+    String? secondaryBtnText,
+    VoidCallback? onSecondaryPressed,
+    bool isSvg = true,
   }) {
-    const defaultBtn = CustomButtonWidget();
-    final parentContext = context;
-
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       useRootNavigator: true,
+
+
+      isDismissible: false, // Closing is prevented when pressure is applied outside the BottomSheet
+      enableDrag: false,    // Prevent the BottomSheet from locking by dragging it down
+
       builder: (sheetContext) => Container(
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(sheetContext).size.height * 0.75,
-        ),
         decoration: BoxDecoration(
           color: AppColors.neutral100,
           borderRadius: BorderRadius.only(
@@ -32,16 +36,12 @@ class AppDialogs {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.fromLTRB(
-            16.w,
-            12.h,
-            16.w,
-            24.h + MediaQuery.of(sheetContext).viewInsets.bottom,
-          ),
+          padding: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 24.h),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
+              // Handle (Grey Police)
+          Container(
                 width: 40.w,
                 height: 4.h,
                 decoration: BoxDecoration(
@@ -51,75 +51,54 @@ class AppDialogs {
               ),
               SizedBox(height: 16.h),
 
+              // Title
               Text(
-                "تسجيل كضيف",
+                title,
                 style: AppTexts.heading3Bold.copyWith(color: AppColors.neutral1000),
-                textAlign: TextAlign.center,
               ),
               SizedBox(height: 16.h),
               Divider(color: AppColors.neutral300, thickness: 1),
               SizedBox(height: 24.h),
 
-              SvgPicture.asset(
-                imagePath,
-                width: 140.w,
-                height: 140.w,
-              ),
+              // Image
+              isSvg
+                  ? SvgPicture.asset(imagePath, width: 140.w, height: 140.w)
+                  : Image.asset(imagePath, width: 140.w, height: 140.w),
+
               SizedBox(height: 24.h),
 
+              // descriptionSpan
               Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "أهلاً بك! يمكنك استكشاف التطبيق وتصفح المنتجات بكل حرية",
-                      style: AppTexts.heading2Accent.copyWith(
-                        color: AppColors.neutral1000,
-                      ),
-                    ),
-                    const TextSpan(text: "\n"),
-                    WidgetSpan(child: SizedBox(height: 24.h)),
-                    TextSpan(
-                      text: "لن تتمكن من إتمام عمليات الشراء إلا بعد تسجيل الدخول أو إنشاء حساب.",
-                      style: AppTexts.featureStandard.copyWith(
-                        color: AppColors.neutral600,
-                      ),
-                    ),
-                  ],
-                ),
+                descriptionSpan,
+                style: AppTexts.featureStandard.copyWith(color: AppColors.neutral1000),
                 textAlign: TextAlign.center,
               ),
 
               SizedBox(height: 32.h),
 
+              // Button display logic
               Row(
                 children: [
-                  Expanded(
-                    child: CustomButtonWidget(
-                      text: "تسجيل كضيف",
-                      color: AppColors.neutral100,
-                      textColor: AppColors.primary700,
-                      borderSide: BorderSide(color: AppColors.primary700,),
-                      width: double.infinity,
-                      height: defaultBtn.height ?? 53.h,
-                      borderRadius: defaultBtn.borderRadius,
-                      onPressed: () {
-                        Navigator.of(sheetContext).pop();
-                        onGuestPressed?.call();
-                      },
+                  // If the second button is there, draw it and the space next to it
+                  if (secondaryBtnText != null && onSecondaryPressed != null) ...[
+                    Expanded(
+                      child: CustomButtonWidget(
+                        text: secondaryBtnText,
+                        color: AppColors.neutral100,
+                        textColor: AppColors.primary700,
+                        borderSide: BorderSide(color: AppColors.primary700),
+                        onPressed: onSecondaryPressed,
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 12.w),
+                    SizedBox(width: 12.w),
+                  ],
+
+                  // / The main button (always present, takes the available display)
                   Expanded(
                     child: CustomButtonWidget(
-                      text: "تسجيل الدخول",
+                      text: primaryBtnText,
                       color: AppColors.primary700,
-                      width: double.infinity,
-                      height: defaultBtn.height ?? 53.h,
-                      borderRadius: defaultBtn.borderRadius,
-                      onPressed: () {
-                        Navigator.of(sheetContext).pop();
-                        parentContext.push('/login');
-                      },
+                      onPressed: onPrimaryPressed,
                     ),
                   ),
                 ],

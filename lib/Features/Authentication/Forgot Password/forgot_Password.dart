@@ -16,12 +16,9 @@ class forgot_Password extends StatefulWidget {
 }
 
 class _forgot_PasswordState extends State<forgot_Password> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  bool isObscure = true;
-  bool isAgreed = false;
+  final TextEditingController emailController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +28,6 @@ class _forgot_PasswordState extends State<forgot_Password> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-
 
             Align(
               alignment: Alignment.topRight,
@@ -55,7 +50,8 @@ class _forgot_PasswordState extends State<forgot_Password> {
               ),
             ),
 
-            SizedBox(height:40.h),
+            SizedBox(height: 40.h),
+
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -82,16 +78,16 @@ class _forgot_PasswordState extends State<forgot_Password> {
 
             SizedBox(height: 32.h),
 
+
             CustomTextFormFieldWidget(
-              controller: passwordController,
+              controller: emailController,
               labelText: 'البريد الإلكتروني',
               hintText: 'قم بإدخال بريدك الإلكتروني الخاص بك هنا',
-              obscureText: isObscure,
-
+              keyboardType: TextInputType.emailAddress,
             ),
 
-
             const Spacer(),
+
 
             Center(
               child: Text.rich(
@@ -123,8 +119,7 @@ class _forgot_PasswordState extends State<forgot_Password> {
             CustomButtonWidget(
               text: 'ارسال',
               color: AppColors.primary700,
-              onPressed: () {
-              },
+              onPressed: () => context.push('/OTP_Password', extra: {'email': emailController.text, 'isFromSignup': false}),
             ),
 
             SizedBox(height: 24.h),
