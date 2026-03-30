@@ -7,8 +7,6 @@ import '../../../Style/Theme/App_Fonts.dart';
 import '../../../Style/Theme/Base_Screen.dart';
 import '../../../Style/Widgets/Buttons/Custom_Button_Widget.dart';
 import '../../../Style/Widgets/Popups/Poup_UI.dart';
-import '../../../routes/app-router.dart';
-import '../Login/Login.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -16,7 +14,6 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-
       child: Column(
         children: [
           SizedBox(height: 40.h),
@@ -41,40 +38,39 @@ class WelcomeScreen extends StatelessWidget {
             clipBehavior: Clip.none,
             alignment: Alignment.topCenter,
             children: [
-
               Container(
                 width: double.infinity,
                 padding: EdgeInsets.fromLTRB(18.w, 60.h, 18.w, 18.h),
                 decoration: BoxDecoration(
                   color: AppColors.neutral100,
                   borderRadius: BorderRadius.circular(16.r),
-                  border: Border.all(color: AppColors.primary700,),
+                  border: Border.all(color: AppColors.primary700),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(height: 32.h),
+
+                    // Login button
                     CustomButtonWidget(
                       text: 'تسجيل دخول',
-                      onPressed: () {
-                        context.push('/login');
-                      },
+                      onPressed: () => context.push('/login'),
                     ),
 
                     SizedBox(height: 12.h),
 
+                    // Create account button
                     CustomButtonWidget(
                       text: 'إنشاء حساب',
                       color: AppColors.neutral100,
                       textColor: AppColors.primary700,
-                      borderSide: BorderSide(color: AppColors.primary700, ),
-                      onPressed: () {
-                        context.push('/Signup');
-                      },
+                      borderSide: BorderSide(color: AppColors.primary700),
+                      onPressed: () => context.push('/Signup'),
                     ),
 
                     SizedBox(height: 12.h),
 
+                    // Guest registration link with the enhanced popup
                     Center(
                       child: Text.rich(
                         TextSpan(
@@ -92,9 +88,41 @@ class WelcomeScreen extends StatelessWidget {
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  AppDialogs.showGuestBottomSheet(
+                                  // Invoke the popup with the formatted description
+                                  AppDialogs.showCommonBottomSheet(
                                     context: context,
                                     imagePath: "Assets/Icons/Svg/guest_warning.svg",
+                                    title: "تسجيل كضيف",
+                                    descriptionSpan: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: "أهلاً بك! يمكنك إستكشاف التطبيق وتصفح المنتجات بكل حرية",
+                                          style: AppTexts.heading2Accent.copyWith(
+                                            color: AppColors.neutral1000,
+                                            fontWeight: FontWeight.bold,
+                                            height: 1.5,
+                                          ),
+                                        ),
+                                        const TextSpan(text: "\n\n"),
+                                        TextSpan(
+                                          text: "لن تتمكن من إتمام عمليات الشراء إلا بعد تسجيل الدخول أو إنشاء حساب.",
+                                          style: AppTexts.featureStandard.copyWith(
+                                            color: AppColors.neutral600,
+                                            height: 1.5,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    primaryBtnText: "تسجيل الدخول",
+                                    secondaryBtnText: "تسجيل كضيف",
+                                    onPrimaryPressed: () {
+                                      Navigator.pop(context);
+                                      context.push('/login');
+                                    },
+                                    onSecondaryPressed: () {
+                                      Navigator.pop(context);
+                                      context.go('/HomeScreen');
+                                    },
                                   );
                                 },
                             ),
@@ -106,6 +134,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
 
+              // Image
               Positioned(
                 top: -50.w,
                 child: Container(
@@ -133,8 +162,6 @@ class WelcomeScreen extends StatelessWidget {
               ),
             ],
           ),
-
-
         ],
       ),
     );
