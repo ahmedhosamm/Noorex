@@ -16,19 +16,25 @@ class forgot_Password extends StatefulWidget {
 }
 
 class _forgot_PasswordState extends State<forgot_Password> {
-
   final TextEditingController emailController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    // Dispose the controller to free up resources
+    emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
       child: Form(
-        key: formKey,
+        key: formKey, // Assigning form key for validation
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end, // RTL Alignment
           children: [
-
+            // Back navigation button
             Align(
               alignment: Alignment.topRight,
               child: InkWell(
@@ -52,25 +58,20 @@ class _forgot_PasswordState extends State<forgot_Password> {
 
             SizedBox(height: 40.h),
 
+            // Header section with instructions
             Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     'نسيت كلمة المرور',
-                    style: AppTexts.heading1Bold.copyWith(
-                      color: AppColors.neutral1000,
-                    ),
+                    style: AppTexts.heading1Bold.copyWith(color: AppColors.neutral1000),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 8.h),
                   Text(
                     'الرجاء إدخال بريدك الإلكتروني لإرسال رمز التأكيد إليه',
                     textAlign: TextAlign.center,
-                    style: AppTexts.contentRegular.copyWith(
-                      color: AppColors.neutral600,
-                    ),
+                    style: AppTexts.contentRegular.copyWith(color: AppColors.neutral600),
                   ),
                 ],
               ),
@@ -78,24 +79,37 @@ class _forgot_PasswordState extends State<forgot_Password> {
 
             SizedBox(height: 32.h),
 
-
+            // Email Field with format validation (Checking for @ and .domain)
             CustomTextFormFieldWidget(
               controller: emailController,
               labelText: 'البريد الإلكتروني',
               hintText: 'قم بإدخال بريدك الإلكتروني الخاص بك هنا',
               keyboardType: TextInputType.emailAddress,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'يرجى إدخال البريد الإلكتروني';
+                }
+
+                // Regular Expression for email format verification
+                final bool emailValid = RegExp(
+                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"
+                ).hasMatch(value);
+
+                if (!emailValid) {
+                  return 'يرجى إدخال بريد إلكتروني صالح';
+                }
+                return null;
+              },
             ),
 
             const Spacer(),
 
-
+            // Link to navigate back to login
             Center(
               child: Text.rich(
                 TextSpan(
                   text: ' لدي حساب بالفعل ؟',
-                  style: AppTexts.contentRegular.copyWith(
-                    color: AppColors.neutral300,
-                  ),
+                  style: AppTexts.contentRegular.copyWith(color: AppColors.neutral300),
                   children: [
                     WidgetSpan(child: SizedBox(width: 4.w)),
                     TextSpan(
@@ -104,10 +118,7 @@ class _forgot_PasswordState extends State<forgot_Password> {
                         color: AppColors.secondary500,
                         decoration: TextDecoration.underline,
                       ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          context.push('/login');
-                        },
+                      recognizer: TapGestureRecognizer()..onTap = () => context.push('/login'),
                     ),
                   ],
                 ),
@@ -116,10 +127,19 @@ class _forgot_PasswordState extends State<forgot_Password> {
 
             SizedBox(height: 18.h),
 
+            // Action button triggering the validation
             CustomButtonWidget(
               text: 'ارسال',
               color: AppColors.primary700,
-              onPressed: () => context.push('/OTP_Password', extra: {'email': emailController.text, 'isFromSignup': false}),
+              onPressed: () {
+                if (formKey.currentState!.validate()) {
+                  // Only push if email format is correct
+                  context.push('/OTP_Password', extra: {
+                    'email': emailController.text,
+                    'isFromSignup': false
+                  });
+                }
+              },
             ),
 
             SizedBox(height: 24.h),

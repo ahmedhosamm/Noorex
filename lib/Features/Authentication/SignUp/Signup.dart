@@ -28,7 +28,7 @@ class _SignupscreenState extends State<Signupscreen> {
 
   @override
   void dispose() {
-
+    // Dispose controllers to free memory and prevent leaks
     nameController.dispose();
     emailController.dispose();
     phoneController.dispose();
@@ -40,14 +40,15 @@ class _SignupscreenState extends State<Signupscreen> {
   Widget build(BuildContext context) {
     return BaseScreen(
       child: Form(
-        key: formKey,
+        key: formKey, // Assigning GlobalKey for input validation
         child: SingleChildScrollView(
           child: SizedBox(
             height: MediaQuery.of(context).size.height - 40.h,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              // Aligning elements to the right for RTL layout
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                //square back button
+                // Top navigation back button
                 Align(
                   alignment: Alignment.topRight,
                   child: InkWell(
@@ -70,6 +71,8 @@ class _SignupscreenState extends State<Signupscreen> {
                 ),
 
                 SizedBox(height: 40.h),
+
+                // Header section with Title and Description
                 Center(
                   child: Column(
                     children: [
@@ -90,34 +93,63 @@ class _SignupscreenState extends State<Signupscreen> {
 
                 SizedBox(height: 32.h),
 
-                // input fields
+                // Username field with basic non-empty validation
                 CustomTextFormFieldWidget(
                   controller: nameController,
                   labelText: 'اسم المستخدم',
                   hintText: 'قم بإدخال اسم المستخدم الخاص بك هنا',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'يرجى إدخال اسم المستخدم';
+                    }
+                    return null;
+                  },
                 ),
 
                 SizedBox(height: 18.h),
 
+                // Email field with strict format validation
                 CustomTextFormFieldWidget(
                   controller: emailController,
                   labelText: 'البريد الإلكتروني',
                   hintText: 'قم بإدخال بريدك الإلكتروني الخاص بك هنا',
                   keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'يرجى إدخال البريد الإلكتروني';
+                    }
+
+                    // Regex for valid email address format
+                    final bool emailValid = RegExp(
+                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"
+                    ).hasMatch(value);
+
+                    if (!emailValid) {
+                      return 'يرجى إدخال بريد إلكتروني صالح';
+                    }
+                    return null;
+                  },
                 ),
 
                 SizedBox(height: 18.h),
 
+                // Phone field with non-empty validation
                 CustomTextFormFieldWidget(
                   controller: phoneController,
                   labelText: 'رقم الهاتف',
                   hintText: 'قم بإدخال رقم الهاتف الخاص بك هنا',
                   keyboardType: TextInputType.phone,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'يرجى إدخال رقم الهاتف';
+                    }
+                    return null;
+                  },
                 ),
 
                 SizedBox(height: 12.h),
 
-                // Terms and Conditions Approval Section
+                // Terms and Conditions checkbox section
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -142,7 +174,7 @@ class _SignupscreenState extends State<Signupscreen> {
                       child: Checkbox(
                         value: isAgreed,
                         activeColor: AppColors.primary700,
-                        side:  BorderSide(color: AppColors.neutral600),
+                        side: BorderSide(color: AppColors.neutral600),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
                         onChanged: (val) => setState(() => isAgreed = val!),
                       ),
@@ -152,7 +184,7 @@ class _SignupscreenState extends State<Signupscreen> {
 
                 const Spacer(),
 
-                // Link back to log in
+                // Navigation link back to Login screen
                 Center(
                   child: Text.rich(
                     TextSpan(
@@ -175,28 +207,38 @@ class _SignupscreenState extends State<Signupscreen> {
 
                 SizedBox(height: 18.h),
 
-                // Send button with unified logic
+                // Submit button with dual validation (Fields + Terms)
                 CustomButtonWidget(
                   text: 'التالي',
                   color: AppColors.primary700,
                   onPressed: () {
+                    // Check if input fields are valid
                     if (formKey.currentState!.validate()) {
+                      // Check if the user agreed to terms
                       if (isAgreed) {
-                        // Passing data to the OTP page with the indication that we are in signup mode
                         context.push('/OTP_Password', extra: {
                           'email': emailController.text,
                           'isFromSignup': true,
                         });
                       } else {
+                        // Display floating snackbar if terms are not accepted
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('يرجى الموافقة على شروط الخدمة أولاً')),
+                          SnackBar(
+                            content: Text(
+                              'يرجى الموافقة على شروط الخدمة أولاً',
+                              textDirection: TextDirection.rtl,
+                              style: AppTexts.contentRegular.copyWith(color: Colors.white),
+                            ),
+                            backgroundColor: AppColors.primary1000,
+                            behavior: SnackBarBehavior.floating,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+                          ),
                         );
                       }
                     }
                   },
                 ),
 
-                SizedBox(height: 24.h),
               ],
             ),
           ),
@@ -205,7 +247,7 @@ class _SignupscreenState extends State<Signupscreen> {
     );
   }
 
-  // Method to help with link texts
+  // Helper method for clickable rich text links
   TextSpan _linkTextSpan(String text, VoidCallback onTap) {
     return TextSpan(
       text: text,

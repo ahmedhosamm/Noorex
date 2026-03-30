@@ -21,19 +21,25 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   bool isObscure = true;
-  bool isAgreed = false;
+
+  @override
+  void dispose() {
+    // Dispose controllers to free up memory
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
       child: Form(
-        key: formKey,
+        key: formKey, // Form key for input validation logic
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          // Align items to the Right (RTL Start)
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-
-
-
+            // Top Navigation: Back Button
             Align(
               alignment: Alignment.topRight,
               child: InkWell(
@@ -55,26 +61,22 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
 
-            SizedBox(height:40.h),
+            SizedBox(height: 40.h),
+
+            // Header: Title and Description
             Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     'تسجيل الدخول',
-                    style: AppTexts.heading1Bold.copyWith(
-                      color: AppColors.neutral1000,
-                    ),
+                    style: AppTexts.heading1Bold.copyWith(color: AppColors.neutral1000),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 8.h),
                   Text(
                     'الرجاء إدخال بريدك الإلكتروني وكلـمة المرور للوصول إلى حسابك.',
                     textAlign: TextAlign.center,
-                    style: AppTexts.contentRegular.copyWith(
-                      color: AppColors.neutral600,
-                    ),
+                    style: AppTexts.contentRegular.copyWith(color: AppColors.neutral600),
                   ),
                 ],
               ),
@@ -82,113 +84,77 @@ class _LoginScreenState extends State<LoginScreen> {
 
             SizedBox(height: 32.h),
 
+            // Email Input Field with Format Validation
             CustomTextFormFieldWidget(
               controller: emailController,
               labelText: 'البريد الإلكتروني',
               hintText: 'قم بإدخال بريدك الإلكتروني الخاص بك هنا',
+              keyboardType: TextInputType.emailAddress,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'يرجى إدخال البريد الإلكتروني';
+                }
+
+                // Regular Expression for a valid email format
+                final bool emailValid = RegExp(
+                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"
+                ).hasMatch(value);
+
+                if (!emailValid) {
+                  return 'يرجى إدخال بريد إلكتروني صالح';
+                }
+                return null;
+              },
             ),
 
             SizedBox(height: 18.h),
 
+            // Password Input Field
             CustomTextFormFieldWidget(
               controller: passwordController,
               labelText: 'كلـمة المرور',
               hintText: 'قم بإدخال كلـمة المرور الخاص بك هنا',
               obscureText: isObscure,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'يرجى إدخال كلمة المرور';
+                }
+                return null;
+              },
               suffixIcon: IconButton(
                 onPressed: () => setState(() => isObscure = !isObscure),
-                icon: Icon(isObscure ? Icons.visibility_off_outlined  : Icons.remove_red_eye_outlined,
-                    color: AppColors.neutral600),
+                icon: Icon(
+                  isObscure ? Icons.visibility_off_outlined : Icons.remove_red_eye_outlined,
+                  color: AppColors.neutral600,
+                ),
               ),
             ),
 
-            SizedBox(height: 8.h),
+            SizedBox(height: 12.h),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Text.rich(
-                    textAlign: TextAlign.right,
-                    textDirection: TextDirection.rtl,
-                    TextSpan(
-                      text: 'أوافق على ',
-                      style: AppTexts.contentRegular.copyWith(
-                        color: AppColors.neutral600,
-                      ),
-                      children: [
-                        WidgetSpan(
-                          alignment: PlaceholderAlignment.middle,
-                          child: InkWell(
-                            onTap: () => print("Terms"),
-                            child: Text(
-                              'شروط الخدمة',
-                              style: AppTexts.contentEmphasis.copyWith(
-                                color: AppColors.secondary500,
-                                decoration: TextDecoration.underline,
-                                decorationColor: AppColors.secondary500,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const TextSpan(text: '  و '),
-                        WidgetSpan(
-                          alignment: PlaceholderAlignment.middle,
-                          child: InkWell(
-                            onTap: () => print("Privacy"),
-                            child: Text(
-                              'سياسة الخصوصية',
-                              style: AppTexts.contentEmphasis.copyWith(
-                                color: AppColors.secondary500,
-                                decoration: TextDecoration.underline,
-                                decorationColor: AppColors.secondary500,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                SizedBox(
-                  width: 24.w,
-                  height: 24.h,
-                  child: Checkbox(
-                    value: isAgreed,
-                    activeColor: AppColors.primary700,
-                    side: BorderSide(color: AppColors.neutral600),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
-                    onChanged: (val) => setState(() => isAgreed = val!),
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(height: 8.h),
-            GestureDetector(
-              onTap: () {
-                context.push('/forgot_Password');
-              },
-              child: Text(
+            // Forgot Password Navigation Link (Aligned Left)
+            Align(
+              alignment: Alignment.centerLeft,
+              child: GestureDetector(
+                onTap: () => context.push('/forgot_Password'),
+                child: Text(
                   'نسيت كلـمة السر؟',
                   style: AppTexts.contentRegular.copyWith(
                     color: AppColors.secondary500,
                     decoration: TextDecoration.underline,
-                  )
+                  ),
+                ),
               ),
             ),
 
             const Spacer(),
 
+            // Registration Navigation Link
             Center(
               child: Text.rich(
                 TextSpan(
                   text: 'ليس لديك حساب ؟',
-                  style: AppTexts.contentRegular.copyWith(
-                    color: AppColors.neutral300,
-                  ),
+                  style: AppTexts.contentRegular.copyWith(color: AppColors.neutral300),
                   children: [
                     WidgetSpan(child: SizedBox(width: 4.w)),
                     TextSpan(
@@ -198,9 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         decoration: TextDecoration.underline,
                       ),
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          context.push('/Signup');
-                        },
+                        ..onTap = () => context.push('/Signup'),
                     ),
                   ],
                 ),
@@ -209,11 +173,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
             SizedBox(height: 18.h),
 
+            // Main Login Action Button
             CustomButtonWidget(
               text: 'تسجيل دخول',
               color: AppColors.primary700,
               onPressed: () {
-                context.push('/login');
+                // Check if all input fields are valid before proceeding
+                if (formKey.currentState!.validate()) {
+                  context.go('/HomeScreen');
+                }
               },
             ),
 

@@ -28,7 +28,10 @@ class AppRouter {
         path: '/CreateNewPassword',
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>;
-          return Create_New_Password(email: extra['email'], isFromSignup: extra['isFromSignup']);
+          return Create_New_Password(
+            email: extra['email'],
+            isFromSignup: extra['isFromSignup'],
+          );
         },
       ),
     ],
