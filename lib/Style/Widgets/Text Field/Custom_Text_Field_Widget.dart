@@ -88,14 +88,15 @@ class CustomTextFormFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
+      // Forces everything (Label and Error) to align Right
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-
         if (labelText != null) ...[
           Padding(
             padding: EdgeInsets.only(bottom: 8.h),
             child: Text(
               labelText!,
+              textAlign: TextAlign.right,
               style: labelStyle ?? AppTexts.highlightEmphasis.copyWith(
                 color: AppColors.neutral1000,
               ),
@@ -103,7 +104,6 @@ class CustomTextFormFieldWidget extends StatelessWidget {
           ),
         ],
 
-        // 2. الخانة نفسها
         Focus(
           focusNode: focusNode,
           child: Builder(
@@ -122,52 +122,45 @@ class CustomTextFormFieldWidget extends StatelessWidget {
                   controller: controller,
                   obscureText: obscureText ?? false,
                   textAlign: TextAlign.start,
-                  autofocus: autofocus ?? false,
-                  autocorrect: autocorrect ?? true,
-                  enableSuggestions: enableSuggestions ?? true,
-                  readOnly: readOnly ?? false,
-                  showCursor: showCursor,
-                  maxLength: maxLength,
-                  keyboardType: keyboardType,
-                  textInputAction: textInputAction,
-                  onChanged: onChanged,
                   validator: validator,
-                  onSaved: onSaved,
-                  inputFormatters: inputFormatters,
-                  textAlignVertical: textAlignVertical,
-                  autofillHints: autofillHints,
-                  maxLines: isChat ? null : maxLines ?? 1,
-                  minLines: isChat ? null : minLines,
-                  style: textStyle ?? AppTexts.contentEmphasis.copyWith(
-                    color: AppColors.neutral1000,
-                  ),
-                  onTapOutside: isChat ? null : (event) => FocusScope.of(context).unfocus(),
+                  // Correcting alignment for Arabic inputs
                   decoration: InputDecoration(
-
                     filled: true,
                     fillColor: backgroundColor ?? AppColors.neutral100,
+
+                    // isDense is CRITICAL to remove hidden padding when using icons
+                    isDense: true,
+
+                    // Set horizontal to 0.w to eliminate the gap in both fields
                     contentPadding: contentPadding ?? EdgeInsets.symmetric(
-                      horizontal: 12.w,
+                      horizontal: 8.w,
                       vertical: height ?? 12.h,
                     ),
 
-                    // إعدادات البرواز
+                    errorStyle: AppTexts.contentRegular.copyWith(
+                      color: Colors.red,
+
+                    ),
+
                     border: _buildBorder(AppColors.neutral300),
                     enabledBorder: _buildBorder(currentBorderColor),
                     focusedBorder: _buildBorder(AppColors.primary700, width: 1.2),
-                    errorBorder: _buildBorder(AppColors.red100),
-                    focusedErrorBorder: _buildBorder(AppColors.red100, width: 1.2),
+                    errorBorder: _buildBorder(Colors.red),
+                    focusedErrorBorder: _buildBorder(Colors.red, width: 1.2),
 
                     hintText: hintText,
                     hintStyle: hintStyle ?? AppTexts.contentRegular.copyWith(
                       color: AppColors.neutral500,
                     ),
-                    helperText: helperText,
-                    errorText: errorText,
+
+                    // Prefix and Suffix handling
                     prefixIcon: prefixIcon,
                     suffixIcon: suffixIcon,
-                    prefixIconColor: isFocused ? AppColors.primary700 : AppColors.neutral600,
-                    suffixIconColor: isFocused ? AppColors.primary700 : AppColors.neutral600,
+
+                    // Added to ensure icons don't push the hint text unevenly
+                    prefixIconConstraints: BoxConstraints(minWidth: 40.w),
+                    suffixIconConstraints: BoxConstraints(minWidth: 40.w),
+
                     enabled: enabled ?? true,
                   ),
                 ),
@@ -181,7 +174,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
 
   OutlineInputBorder _buildBorder(Color color, {double width = 1.0}) {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(borderRadius ?? 8.r), // كبرنا الـ Radius شوية لـ 12 زي الصورة
+      borderRadius: BorderRadius.circular(borderRadius ?? 8.r),
       borderSide: BorderSide(
         color: color,
         width: width.sp,

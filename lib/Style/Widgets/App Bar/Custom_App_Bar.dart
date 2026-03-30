@@ -51,7 +51,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               else
                 SizedBox(width: 48.w),
 
-              // العنوان
               Expanded(
                 child: Text(
                   title,

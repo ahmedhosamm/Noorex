@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'Features/Splash/View UI/Splash_Screen.dart';
-import 'Style/Theme/App_Colors.dart';
-
+import 'package:google_fonts/google_fonts.dart';
+import 'package:noorex/routes/app-router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,25 +12,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return ScreenUtilInit(
       designSize: const Size(390, 812),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
+        return MaterialApp.router(
           debugShowCheckedModeBanner: false,
-          title: 'Noorex',
-
-          // إعدادات الـ Theme الأساسية للأبلكيشن
+          routerConfig: AppRouter.router,
           theme: ThemeData(
             useMaterial3: true,
-            scaffoldBackgroundColor: AppColors.neutral100,
-            fontFamily: 'Cairo',
+            textTheme: GoogleFonts.cairoTextTheme(ThemeData.light().textTheme),
           ),
-
-          // البداية هتكون من صفحة الـ Splash
-          home: const SplashScreen(),
         );
       },
     );

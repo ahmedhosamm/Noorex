@@ -8,25 +8,21 @@ import '../../../Style/Theme/Base_Screen.dart';
 import '../../../Style/Widgets/Buttons/Custom_Button_Widget.dart';
 import '../../../Style/Widgets/Text Field/Custom_Text_Field_Widget.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class forgot_Password extends StatefulWidget {
+  const forgot_Password({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<forgot_Password> createState() => _forgot_PasswordState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _forgot_PasswordState extends State<forgot_Password> {
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  bool isObscure = true;
 
   @override
   void dispose() {
-    // Dispose controllers to free up memory
+    // Dispose the controller to free up resources
     emailController.dispose();
-    passwordController.dispose();
     super.dispose();
   }
 
@@ -34,12 +30,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return BaseScreen(
       child: Form(
-        key: formKey, // Form key for input validation logic
+        key: formKey, // Assigning form key for validation
         child: Column(
-          // Align items to the Right (RTL Start)
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end, // RTL Alignment
           children: [
-            // Top Navigation: Back Button
+            // Back navigation button
             Align(
               alignment: Alignment.topRight,
               child: InkWell(
@@ -63,18 +58,18 @@ class _LoginScreenState extends State<LoginScreen> {
 
             SizedBox(height: 40.h),
 
-            // Header: Title and Description
+            // Header section with instructions
             Center(
               child: Column(
                 children: [
                   Text(
-                    'تسجيل الدخول',
+                    'نسيت كلمة المرور',
                     style: AppTexts.heading1Bold.copyWith(color: AppColors.neutral1000),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 8.h),
                   Text(
-                    'الرجاء إدخال بريدك الإلكتروني وكلـمة المرور للوصول إلى حسابك.',
+                    'الرجاء إدخال بريدك الإلكتروني لإرسال رمز التأكيد إليه',
                     textAlign: TextAlign.center,
                     style: AppTexts.contentRegular.copyWith(color: AppColors.neutral600),
                   ),
@@ -84,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
             SizedBox(height: 32.h),
 
-            // Email Input Field with Format Validation
+            // Email Field with format validation (Checking for @ and .domain)
             CustomTextFormFieldWidget(
               controller: emailController,
               labelText: 'البريد الإلكتروني',
@@ -95,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   return 'يرجى إدخال البريد الإلكتروني';
                 }
 
-                // Regular Expression for a valid email format
+                // Regular Expression for email format verification
                 final bool emailValid = RegExp(
                     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"
                 ).hasMatch(value);
@@ -107,64 +102,23 @@ class _LoginScreenState extends State<LoginScreen> {
               },
             ),
 
-            SizedBox(height: 18.h),
-
-            // Password Input Field
-            CustomTextFormFieldWidget(
-              controller: passwordController,
-              labelText: 'كلـمة المرور',
-              hintText: 'قم بإدخال كلـمة المرور الخاص بك هنا',
-              obscureText: isObscure,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'يرجى إدخال كلمة المرور';
-                }
-                return null;
-              },
-              suffixIcon: IconButton(
-                onPressed: () => setState(() => isObscure = !isObscure),
-                icon: Icon(
-                  isObscure ? Icons.visibility_off_outlined : Icons.remove_red_eye_outlined,
-                  color: AppColors.neutral600,
-                ),
-              ),
-            ),
-
-            SizedBox(height: 12.h),
-
-            // Forgot Password Navigation Link (Aligned Left)
-            Align(
-              alignment: Alignment.centerLeft,
-              child: GestureDetector(
-                onTap: () => context.push('/forgot_Password'),
-                child: Text(
-                  'نسيت كلـمة السر؟',
-                  style: AppTexts.contentRegular.copyWith(
-                    color: AppColors.secondary500,
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ),
-            ),
-
             const Spacer(),
 
-            // Registration Navigation Link
+            // Link to navigate back to login
             Center(
               child: Text.rich(
                 TextSpan(
-                  text: 'ليس لديك حساب ؟',
+                  text: ' لدي حساب بالفعل ؟',
                   style: AppTexts.contentRegular.copyWith(color: AppColors.neutral300),
                   children: [
                     WidgetSpan(child: SizedBox(width: 4.w)),
                     TextSpan(
-                      text: 'إنشاء حساب',
+                      text: 'تسجيل الدخول',
                       style: AppTexts.contentEmphasis.copyWith(
                         color: AppColors.secondary500,
                         decoration: TextDecoration.underline,
                       ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () => context.push('/Signup'),
+                      recognizer: TapGestureRecognizer()..onTap = () => context.push('/login'),
                     ),
                   ],
                 ),
@@ -173,14 +127,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
             SizedBox(height: 18.h),
 
-            // Main Login Action Button
+            // Action button triggering the validation
             CustomButtonWidget(
-              text: 'تسجيل دخول',
+              text: 'ارسال',
               color: AppColors.primary700,
               onPressed: () {
-                // Check if all input fields are valid before proceeding
                 if (formKey.currentState!.validate()) {
-                  context.go('/HomeScreen');
+                  // Only push if email format is correct
+                  context.push('/OTP_Password', extra: {
+                    'email': emailController.text,
+                    'isFromSignup': false
+                  });
                 }
               },
             ),
