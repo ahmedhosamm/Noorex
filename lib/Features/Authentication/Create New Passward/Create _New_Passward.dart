@@ -170,12 +170,12 @@ class _Create_New_PasswordState extends State<Create_New_Password> {
   Widget _buildValidationChip(String label, bool isValid, bool isNotEmpty) {
     // Initial color: Gray | Valid: Green | Invalid (after typing): Red
     Color bgColor = !isNotEmpty
-        ? AppColors.neutral200 // Gray when empty
-        : (isValid ? const Color(0xFFE8F5E9) : const Color(0xFFFFEBEE)); // Light Green / Light Red
+        ? AppColors.neutral200 
+        : (isValid ? AppColors.green10 : AppColors.red10);
 
     Color textColor = !isNotEmpty
-        ? AppColors.neutral600 // Gray text when empty
-        : (isValid ? const Color(0xFF2E7D32) : const Color(0xFFC62828)); // Dark Green / Dark Red
+        ? AppColors.neutral600
+        : (isValid ? AppColors.green200 : AppColors.red100);
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
