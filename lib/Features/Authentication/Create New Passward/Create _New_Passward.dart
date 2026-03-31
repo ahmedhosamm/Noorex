@@ -142,18 +142,35 @@ class _Create_New_PasswordState extends State<Create_New_Password> {
                     descriptionSpan: TextSpan(
                       children: [
                         TextSpan(
-                          text: widget.isFromSignup ? "شكراً لإنضمامك!" : "تم تغير كلمة المرور بنجاح",
-                          style: AppTexts.heading2Accent.copyWith(color: AppColors.neutral1000, fontWeight: FontWeight.bold),
-                        ),
-                        WidgetSpan(child: SizedBox(height: 8.h)),
-                        const TextSpan(text: "\n"),
-                        TextSpan(
-                          text: "يمكنك الآن تسجيل الدخول إلى حسابك بأمان.",
-                          style: AppTexts.featureStandard.copyWith(color: AppColors.neutral600, height: 1.4),
+                          children: [
+                            TextSpan(
+                              text: widget.isFromSignup
+                                  ? "شكراً لانضمامك إلى تطبيق نوريكس!" // تصحيح الهمزة
+                                  : "تم تغيير كلمة المرور بنجاح", // تصحيح كلمة تغيير
+                              style: AppTexts.heading2Accent.copyWith(
+                                color: AppColors.neutral1000,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+
+                            // Fixed 8px spacing for professional look
+                            WidgetSpan(child: SizedBox(height: 8.h)),
+                            const TextSpan(text: "\n"),
+
+                            TextSpan(
+                              text: widget.isFromSignup
+                                  ? "شكراً لانضمامك إلينا، يمكنك الآن البدء في التسوق والتمتع بكافة مميزات التطبيق."
+                                  : "يمكنك الآن تسجيل الدخول إلى حسابك بأمان باستخدام كلمة المرور الجديدة، يرجى الاحتفاظ بها في مكان آمن.",
+                              style: AppTexts.featureStandard.copyWith(
+                                color: AppColors.neutral600,
+                                height: 1.5, // Better readability for Arabic text
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    primaryBtnText: "هيا بنا",
+                    primaryBtnText: "تسجيل الدخول",
                     onPrimaryPressed: () => context.go('/login'),
                   );
                 }
